@@ -4,29 +4,36 @@ Each subfolder is either a **base template** or an **addon**. The `init` command
 copies the base template, then layers each selected addon over it (later writes
 win).
 
+All templates are TypeScript-only.
+
 ## Layout
 
 ```
 templates/
-  expo-ts/                 # base: Expo + TypeScript
-  expo-js/                 # base: Expo + JavaScript
-  react-native-ts/         # base: bare RN CLI + TypeScript
-  react-native-js/         # base: bare RN CLI + JavaScript
+  expo/                    # base: Expo SDK 52 + Expo Router 4 + RN 0.76 + React 18.3
+  react-native/            # base: bare RN CLI (planned)
   addons/
-    navigation/            # React Navigation wiring
+    routing-expo-router/   # placeholder, expo-router structure ships in the expo base
     state-zustand/
-    state-redux/
-    state-context/
-    backend-firebase/
-    backend-supabase/
+    state-redux/           (planned)
+    state-context/         (planned)
+    backend-firebase/      (planned)
+    backend-supabase/      (planned)
     backend-custom/
     auth-jwt/
-    auth-oauth/
-    auth-google/
-    ui-tailwind/           # NativeWind
-    ui-nativebase/
-    ui-custom/
+    auth-oauth/            (planned)
+    auth-google/           (planned)
+    ui-tailwind/           # NativeWind v4
+    ui-nativebase/         (planned)
+    ui-custom/             (planned)
 ```
+
+## Base template: `expo/`
+
+- Expo SDK 52, React Native 0.76, React 18.3.1
+- File-based routing via Expo Router 4 (`app/_layout.tsx`, `app/index.tsx`, `app/(auth)/login.tsx`, ...)
+- New Architecture enabled (`newArchEnabled: true`)
+- `+not-found.tsx` fallback route
 
 ## Adding a new addon
 

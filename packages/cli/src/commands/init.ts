@@ -8,19 +8,15 @@ import { scaffold } from '../core/scaffolder.js';
 
 interface InitOptions {
   template?: 'expo' | 'react-native';
-  ts?: boolean;
-  js?: boolean;
   yes?: boolean;
 }
 
 export function registerInitCommand(program: Command): void {
   program
     .command('init')
-    .description('Scaffold a new React Native app with smart defaults')
+    .description('Scaffold a new React Native app with smart defaults (TypeScript-only)')
     .argument('[name]', 'project name (folder will be created)')
     .option('--template <template>', 'expo | react-native')
-    .option('--ts', 'use TypeScript')
-    .option('--js', 'use JavaScript')
     .option('-y, --yes', 'accept all defaults, skip prompts')
     .action(async (name: string | undefined, opts: InitOptions) => {
       const answers = opts.yes
@@ -67,11 +63,10 @@ export function registerInitCommand(program: Command): void {
 }
 
 function defaultAnswers(name: string | undefined, opts: InitOptions): InitAnswers {
+  const framework = opts.template ?? 'expo';
   return {
     projectName: name ?? 'my-rn-app',
-    framework: opts.template ?? 'expo',
-    language: opts.js ? 'js' : 'ts',
-    navigation: true,
+    framework,
     state: 'zustand',
     backend: 'custom',
     auth: 'jwt',
@@ -92,4 +87,5 @@ function printNextSteps(answers: InitAnswers): void {
   }
   logger.blank();
   logger.info('Run `rnboost generate screen "<prompt>"` to create new screens with AI.');
+  logger.info('Or `rnboost generate component <Name>` for a stub component.');
 }

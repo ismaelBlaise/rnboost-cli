@@ -18,14 +18,11 @@ export async function scaffold({ targetDir, answers }: ScaffoldOptions): Promise
     throw new Error(`Target directory "${targetDir}" already exists and is not empty.`);
   }
 
-  const baseTemplate = resolve(
-    TEMPLATES_ROOT,
-    `${answers.framework}-${answers.language}`,
-  );
+  const baseTemplate = resolve(TEMPLATES_ROOT, answers.framework);
   if (!existsSync(baseTemplate)) {
     throw new Error(
-      `Template "${answers.framework}-${answers.language}" not found at ${baseTemplate}. ` +
-        'Templates ship from feature/templates.',
+      `Template "${answers.framework}" not found at ${baseTemplate}. ` +
+        'Templates ship from feature/templates and feature/upgrade-stack.',
     );
   }
 
@@ -36,8 +33,9 @@ export async function scaffold({ targetDir, answers }: ScaffoldOptions): Promise
 
 async function applyAddons(targetDir: string, answers: InitAnswers): Promise<void> {
   const addonsRoot = resolve(TEMPLATES_ROOT, 'addons');
+  const routing = answers.framework === 'expo' ? 'expo-router' : 'react-navigation';
   const addons = [
-    answers.navigation ? 'navigation' : null,
+    `routing-${routing}`,
     answers.state !== 'none' ? `state-${answers.state}` : null,
     answers.backend !== 'none' ? `backend-${answers.backend}` : null,
     answers.auth !== 'none' ? `auth-${answers.auth}` : null,
