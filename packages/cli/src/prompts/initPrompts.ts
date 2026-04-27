@@ -3,8 +3,6 @@ import inquirer from 'inquirer';
 export interface InitAnswers {
   projectName: string;
   framework: 'expo' | 'react-native';
-  language: 'ts' | 'js';
-  navigation: boolean;
   state: 'redux' | 'zustand' | 'context' | 'none';
   backend: 'firebase' | 'supabase' | 'custom' | 'none';
   auth: 'jwt' | 'oauth' | 'google' | 'none';
@@ -31,33 +29,17 @@ export async function runInitPrompts(defaultName?: string): Promise<InitAnswers>
       name: 'framework',
       message: 'Which framework?',
       choices: [
-        { name: 'Expo (recommended)', value: 'expo' },
-        { name: 'React Native CLI', value: 'react-native' },
+        { name: 'Expo (latest SDK, recommended)', value: 'expo' },
+        { name: 'React Native CLI (bare workflow)', value: 'react-native' },
       ],
       default: 'expo',
-    },
-    {
-      type: 'list',
-      name: 'language',
-      message: 'Language?',
-      choices: [
-        { name: 'TypeScript (recommended)', value: 'ts' },
-        { name: 'JavaScript', value: 'js' },
-      ],
-      default: 'ts',
-    },
-    {
-      type: 'confirm',
-      name: 'navigation',
-      message: 'Set up React Navigation?',
-      default: true,
     },
     {
       type: 'list',
       name: 'state',
       message: 'State management?',
       choices: [
-        { name: 'Zustand (lightweight)', value: 'zustand' },
+        { name: 'Zustand (lightweight, recommended)', value: 'zustand' },
         { name: 'Redux Toolkit', value: 'redux' },
         { name: 'React Context only', value: 'context' },
         { name: 'None', value: 'none' },

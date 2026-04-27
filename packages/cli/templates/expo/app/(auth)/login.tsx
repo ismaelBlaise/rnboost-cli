@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { router } from 'expo-router';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const onSubmit = () => {
+    router.replace('/(app)');
+  };
 
   return (
     <View style={styles.container}>
@@ -15,6 +20,7 @@ export default function LoginScreen() {
         keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
+        accessibilityLabel="email"
       />
       <TextInput
         style={styles.input}
@@ -22,8 +28,13 @@ export default function LoginScreen() {
         secureTextEntry
         value={password}
         onChangeText={setPassword}
+        accessibilityLabel="password"
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onSubmit}
+        accessibilityLabel="sign in"
+      >
         <Text style={styles.buttonText}>Sign in</Text>
       </TouchableOpacity>
     </View>
@@ -31,7 +42,7 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, justifyContent: 'center' },
+  container: { flex: 1, padding: 24, justifyContent: 'center', backgroundColor: '#fff' },
   title: { fontSize: 28, fontWeight: '700', marginBottom: 24 },
   input: {
     borderWidth: 1,
