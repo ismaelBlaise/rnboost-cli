@@ -2,6 +2,7 @@
   "expo": {
     "name": "RNBoost App",
     "slug": "rnboost-app",
+    "scheme": "rnboostapp",
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -12,6 +13,8 @@
     },
     "ios": { "supportsTablet": true },
     "android": { "adaptiveIcon": { "backgroundColor": "#ffffff" } },
-    "web": { "bundler": "metro" }
+    "web": { "bundler": "metro", "output": "static" },
+    "plugins": ["expo-router"],
+    "experiments": { "typedRoutes": true }
   }
 }
