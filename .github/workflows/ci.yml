@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  build:
+    name: build / lint / typecheck
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci || npm install
+
+      - name: Build CLI
+        run: npm run build --workspace @rnboost/cli --if-present
+
+      - name: Build docs
+        run: npm run build --workspace @rnboost/docs --if-present
+
+      - name: Test
+        run: npm test --workspaces --if-present
