@@ -35,15 +35,24 @@ npx expo start
 Skip the prompts entirely:
 
 ```bash
-npx rnboost init myApp --template expo --ts --yes
+npx rnboost init myApp --template expo --yes
 ```
 
-Generate a screen with AI:
+> All scaffolded projects are **TypeScript-only** and use the latest **Expo SDK 52** (React Native 0.76, React 18.3) with **Expo Router 4** for file-based routing.
+
+Generate code with AI:
 
 ```bash
 export OPENAI_API_KEY=sk-...
 rnboost generate screen "settings page with toggle for dark mode"
-# -> src/screens/SettingsPageScreen.tsx
+# -> app/SettingsPageScreen.tsx
+
+rnboost g component PriceTag --ai "show price in EUR with strikethrough discount"
+# -> src/components/PriceTag.tsx
+
+rnboost g hook useDebounce --ai "debounce a value with delay ms"
+rnboost g store Cart --ai "shopping cart with items, add, remove, clear"
+rnboost g service Product
 ```
 
 Audit an existing project:
@@ -58,8 +67,12 @@ rnboost analyze
 
 | Command | What it does |
 |---|---|
-| `rnboost init [name]` | Interactive scaffolding (framework, language, navigation, state, backend, auth, UI). |
-| `rnboost generate screen "<prompt>"` | Generate a React Native screen via OpenAI. |
+| `rnboost init [name]` | Interactive scaffolding (framework, state, backend, auth, UI). TypeScript-only. |
+| `rnboost generate screen "<prompt>"` | AI-generated React Native screen. `--no-ai` for a stub. |
+| `rnboost g component <Name>` | Reusable component with Props + StyleSheet. `--ai "<prompt>"` optional. |
+| `rnboost g hook <name>` | Custom React hook (use* convention). |
+| `rnboost g store <Name>` | Zustand store with state and actions. |
+| `rnboost g service <Name>` | API service module using the `api()` helper. |
 | `rnboost analyze` | Audit the current project and suggest improvements. |
 
 Run `rnboost <cmd> --help` for full options.
